@@ -1,12 +1,31 @@
-import React from 'react';
-
-import Link from 'next/link';
-import Image from 'next/image';
+import React from 'react'; 
+import Link from 'next/link'; 
+import { footerData } from '@/constants/footerData';
 
 function Footer() {
   return (
-    <div>
-        Footer
+    <div className='flex flex-col items-center justify-center py-10 p-5'>
+        <div className='w-full lg:w-[85%] md:p-5  grid grid-cols-1 md:grid-cols-10 gap-5'>
+          <div className='md:col-span-8  grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5'>
+            {
+              footerData.map(i=>(
+                <div key={i.name + '100'} className='flex flex-col gap-4' >
+                  <p className='font-semibold text-lg'>{i.name}</p>
+                  <div className='pl-3 flex flex-col gap-3 text-xs lg:text-sm'>
+                    {i.subCats.map((j,index)=>(
+                      <Link key={index + '200'} href={j.url} className='font-light hover:underline underline-offset-2 '>{j.name}</Link>
+                    ))}
+
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+          <div className='md:col-span-2 flex flex-col gap-3'>
+              <p className='font-semibold text-lg'>Join Our Community </p>
+              <p className='text-xs font-light'>to find the perfect match among dogs, cats, rabbits, birds, and fish. Sign up now and make a difference in a furry friend life!</p>
+          </div>
+        </div>
         <footer className='text-xs flex items-center justify-center text-center  p-3'>
           <span>
           copyright 2024

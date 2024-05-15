@@ -111,9 +111,9 @@ function PetAdoptionSection() {
         </div>
       </section>
       <div className='p-5 flex items-center justify-center '>
-        <section className='w-full lg:w-[85%] shadow-lg p-5 flex flex-col md:flex-row justify-between bg-purple-100 rounded-lg z-[-100]'>
+        <section className='w-full lg:w-[85%] shadow-lg p-5 flex flex-col md:flex-row justify-between bg-purple-100 rounded-lg '>
           <div className='w-full md:w-2/3 flex flex-col items-center md:items-start justify-center gap-5 p-5' >
-            <h3 className='font-extrabold text-3xl md:text-4xl  lg:text-5xl text-custom-violet'>Find Your Furry Friend</h3>
+            <h3 className='font-extrabold text-3xl md:text-4xl text-center lg:text-5xl text-custom-violet'>Find Your Furry Friend</h3>
             <p className='  text-center md:text-start  w-[80%] font-light text-secondary-color'>Embrace the joy of giving a deserving animal a second chance at happiness by opening your heart and home to a furry friend in need, creating a lifelong bond that enriches both your lives</p>
             <div>
               <Link href={'/adoption'} className='px-5 py-2 bg-custom-violet text-white rounded shadow hover:bg-custom-violet/90'>Start Pet Adoption</Link>

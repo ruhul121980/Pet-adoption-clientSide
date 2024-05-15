@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className  + " relative bg-custom-color-2 text-[#373737]"}>
-        <div className=" sticky top-0">
+        <div className=" sticky top-0 z-[1000]">
           <Navbar/>
         </div>
         {children}

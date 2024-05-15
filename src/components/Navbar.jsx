@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 function Navbar() {
   // let showNav = true
-  const [showNav, setShowNav] = useState(true);
+  const [showNav, setShowNav] = useState(false);
   const handleShowNav = ()=> setShowNav(!showNav)
   return (
     <nav className="bg-white/50 backdrop-blur-lg shadow z-[99999999] text-secondary-color px-4 py-2 lg:px-5 lg:py-3 flex flex-col lg:flex-row items-start gap-10 lg:items-center justify-between">
@@ -32,7 +32,7 @@ function Navbar() {
          }
         </button>
       </div>
-      <ul onClick={handleShowNav} className={` ${showNav? " flex flex-col h-screen gap-6": "  hidden "} z-[10000] lg:h-auto lg:gap-0 lg:flex lg:flex-row items-center font-medium`}>
+      <ul onClick={handleShowNav} className={` ${showNav? " flex flex-col h-[90vh] gap-6": "  hidden "} z-[10000] lg:h-auto lg:gap-0 lg:flex lg:flex-row items-center font-medium`}>
         <li >
           <Link href="/adoption"  className='hover:text-black px-3 py-2 flex items-center  gap-1 transition-all ease-in duration-100 '>
             <span className='text-2xl'>
