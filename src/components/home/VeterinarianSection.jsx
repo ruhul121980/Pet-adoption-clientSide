@@ -16,9 +16,9 @@ function VeterinarianSection() {
       </div>
       <div className='w-full  lg:w-[85%] p-5 grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-2 lg:gap-5' >
             {
-              veterinariansData.map(i=>(
+              veterinariansData.map((i,index)=>(
                 <Link 
-                key={i.name} 
+                key={i.name + index} 
                 href={i.url} 
                 className=' relative rounded-lg overflow-hidden text-xs shadow-md group '>
                    <img className=' group-hover:scale-105 duration-200' src={i.img} alt={i.name} />

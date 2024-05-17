@@ -1,11 +1,16 @@
 'use client'
-import { isValidEmail } from '@/utils/emailValidChecker';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import { isValidEmail } from '@/utils/emailValidChecker';
+import { handleLoginFunction } from '@/utils/handleLoginFunction';
+import { useUserContext } from '../context/UserContext';
+import { setUserData } from '@/utils/handleUserData';
 
 const Login = () => {
     const router = useRouter();
+    const userContext = useUserContext();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
@@ -29,36 +34,49 @@ const Login = () => {
     };
   
     const handleSubmit = async (event) => {
-      event.preventDefault(); // Prevent default form submission behavior
-  
-      // Implement  actual authentication logic here (e.g., API call)
-      
-      let loginObj = {
-        email,
-        password
-      }
-      if (loginType == 'user') {
-        loginObj.type = 'user'
-      } else {
-        loginObj.type = 'veterinarian'
-      }
-      
-      console.log(loginObj)
-      // Auth function 
-      const isAuthenticated = email === 'test@gmail.com' && password === '123456';
+     // event.preventDefault(); // Prevent default form submission behavior
+     console.log("login clicked") 
+     if(email.length > 2 | password.length >2 ){
+        let loginObj = {
+          email,
+          password
+        }
+        
+        if (loginType == 'user') {
+          loginObj.type = 'user'
+        } else {
+          loginObj.type = 'veterinarian'
+        }
+        
+        // console.log(loginObj)
+        //fetching data from server
+        const loginServerData = await handleLoginFunction(loginObj)
+        console.log("get the login data",loginServerData)
+        if (loginServerData.status == 200) {
+          setErrorMessage('');
+          let userData = {...loginServerData.data , login:true}
+          //set item to localstorage 
+          setUserData(userData)
+          userContext.setUser(userData)
+          router.push('/dashboard'); // Redirect to dashboard on successful login
+        } else {
+          setErrorMessage(loginServerData.message);
+        }
 
-      if (isAuthenticated) {
-        setErrorMessage('');
-        router.push('/dashboard'); // Redirect to dashboard on successful login
-      } else {
-        setErrorMessage('Invalid email or password!');
       }
     };
   
     const toggleShowPassword = () => {
       setShowPassword(!showPassword);
     };
-  
+
+    useEffect(() => {
+      if(userContext.user.login){
+        router.push('/dashboard')
+      }
+    }, [])
+    
+    
   return (
     <div className="w-full lg:w-[85%] md:shadow grid grid-cols-1 lg:grid-cols-2 p-5 ">
         <div className='order-2 md:order-1'>
@@ -114,7 +132,7 @@ const Login = () => {
                     </button>
                 </div>
                 <button 
-                onClick={handleSubmit} 
+                onClick={()=>{handleSubmit();}} 
                 className=' px-8 py-3 bg-custom-violet-light/90 hover:bg-custom-violet-light duration-200 rounded-lg w-full font-bold text-white'
                 >Login</button>
                 {errorMessage && <p className="text-red-500 text-xs py-2">{errorMessage}</p>}

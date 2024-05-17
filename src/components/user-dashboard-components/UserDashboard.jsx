@@ -5,6 +5,8 @@ import UserVeterinarianVisits from './UserVeterinarianVisits'
 import UserWishlist from './UserWishlist'
 import UserSettings from './UserSettings'
 import UserCreatePost from './UserCreatePost'
+import VetAllServices from './VetAllServices'
+import VetCreateService from './VetCreateService'
 
 const UserDashboard = ({showOnDashboard}) => {
      
@@ -33,6 +35,14 @@ const UserDashboard = ({showOnDashboard}) => {
         {
             showOnDashboard == 'settings' &&
             <UserSettings/>
+        }
+        {
+            showOnDashboard == 'vetServices' &&
+            <VetAllServices/>
+        }
+        {
+            showOnDashboard == 'createServices' &&
+            <VetCreateService/>
         }
     </div>
   )

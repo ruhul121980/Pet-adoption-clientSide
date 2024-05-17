@@ -2,46 +2,42 @@
 import React, { useState } from 'react';
 import './customImgInput.css'
 
-const ImageUploadComponent = () => {
-  const [selectedImages, setSelectedImages] = useState([]);
+const ImageUploadComponent = (selectedImages,setSelectedImages,handleChange) => {
+  // const [selectedImages, setSelectedImages] = useState([]);
 
-  const handleChange = (event) => {
-    const files = [...event.target.files]; // Get all selected files
+  // const handleChange = (event) => {
+  //   const files = [...event.target.files]; // Get all selected files
 
-    const validImages = files.filter((file) => {
-      const fileType = file.type;
-      return fileType === 'image/png' || fileType === 'image/jpeg';
-    });
+  //   const validImages = files.filter((file) => {
+  //     const fileType = file.type;
+  //     return fileType === 'image/png' || fileType === 'image/jpeg';
+  //   });
 
-    const imageDataPromises = validImages.map((image) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(image); // Read image as data URL
+  //   const imageDataPromises = validImages.map((image) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(image); // Read image as data URL
 
-      return new Promise((resolve, reject) => {
-        reader.onload = (e) => resolve(e.target.result); // Resolve with base64 string
-        reader.onerror = (error) => reject(error); // Handle errors
-      });
-    });
+  //     return new Promise((resolve, reject) => {
+  //       reader.onload = (e) => resolve(e.target.result); // Resolve with base64 string
+  //       reader.onerror = (error) => reject(error); // Handle errors
+  //     });
+  //   });
 
-    Promise.all(imageDataPromises)
-      .then((base64Images) => {
-        setSelectedImages([...selectedImages, ...base64Images]); // Update state
-      })
-      .catch((error) => {
-        console.error('Error reading image files:', error);
-      });
-  };
+  //   Promise.all(imageDataPromises)
+  //     .then((base64Images) => {
+  //       setSelectedImages([...selectedImages, ...base64Images]); // Update state
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error reading image files:', error);
+  //     });
+  // };
 
   const removeImage =  (index) => {
     let newList = selectedImages.filter((i,indx )=> indx !== index)
     setSelectedImages(newList)
   }
   return (
-    <div className='flex flex-col gap-5 w-1/2'> 
-     
- 
-      {/* Display selected images (optional) */}
-      
+    <div className='flex flex-col gap-5 '> 
         <div className='w-full grid grid-cols-4 gap-5'>
             <div className="custom-file-upload w-full h-full aspect-[4/3] ">
                 <label htmlFor="images" className=' w-full h-[100%]   cursor-pointer'>
@@ -59,7 +55,7 @@ const ImageUploadComponent = () => {
                     name="images"
                     multiple
                     accept="image/png, image/jpeg"
-                    onChange={handleChange}
+                    onChange={(e)=>handleChange(e)}
                 /> 
                 </label>
             </div>
@@ -81,10 +77,8 @@ const ImageUploadComponent = () => {
             }
             </>
         )}
-        </div>
-      
-    </div>
- 
+        </div> 
+    </div> 
   );
 };
 

@@ -1,12 +1,16 @@
 'use client'
+import Link from 'next/link';
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 import { isValidEmail } from '@/utils/emailValidChecker';
 import { handleRegisterFunction } from '@/utils/handleRegisterFunction';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import { setUserData } from '@/utils/handleUserData';
+import { useUserContext } from '../context/UserContext';
 
 const Register = () => {
-    const router = useRouter();
+  const router = useRouter();
+    const userContext = useUserContext()
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -60,8 +64,6 @@ const Register = () => {
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent default form submission behavior
   
-      // Implement your actual registration logic here (e.g., API call)
-      // This is a simplified example, replace with actual logic
       if (password !== confirmPassword) {
         setErrorMessage('Passwords do not match!');
         return; // Prevent further processing if passwords don't match
@@ -85,17 +87,20 @@ const Register = () => {
         registerObj.license = license
       }
     
-    let data = handleRegisterFunction(registerObj)
-    console.log(data)
-  
-      const isRegistered = false; // Replace with logic to check registration success
-  
-      if (isRegistered) {
-        setErrorMessage('');
-        router.push('/dashboard'); // Redirect to login page on successful registration
-      } else {
-        setErrorMessage('Registration failed!');
-      }
+    let regData = await handleRegisterFunction(registerObj)
+    console.log(regData)
+   
+    if (regData.status == 200) {
+      setErrorMessage('');
+      let userData = {...regData.data , login:true}
+      //set item to localstorage 
+      setUserData(userData)
+      userContext.setUser(userData)
+      router.push('/dashboard'); // Redirect to dashboard on successful login
+    } else {
+      setErrorMessage(regData.message);
+    }
+     
     };
 
     const toggleShowPassword = () => {
@@ -236,7 +241,7 @@ const Register = () => {
                 <button 
                 onClick={handleSubmit} 
                 className=' px-8 py-3 bg-custom-violet-light/90 hover:bg-custom-violet-light duration-200 rounded-lg w-full font-bold text-white'
-                >Login</button>
+                >Register</button>
                 {errorMessage && <p className="text-red-500 text-xs py-2">{errorMessage}</p>}
                 <p className='font-light text-sm py-3'>
                     Already Have An Account? 

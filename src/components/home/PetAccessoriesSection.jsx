@@ -12,7 +12,7 @@ function PetAccessoriesSection() {
             {
               petAccessoriesCategoryData.map(i=>(
                 <div key={i.name} className=' overflow-hidden rounded-lg relative  group hover:shadow'>
-                  <img className=' group-hover:scale-105 z-[-100]  transition-all ease-in duration-200' src={i.img} alt={i.name} srcset={i.img} />
+                  <img className=' group-hover:scale-105 z-[-100]  transition-all ease-in duration-200' src={i.img} alt={i.name}   />
                   <div className=' absolute bottom-0 left-0 w-full bg-black/60 text-white p-5 pb-2 flex flex-col gap-2 '>
                     <p className=' text-center text-xl md:text-2xl font-semibold'>{i.name}</p>
                     <p className=' text-center text-xs md:text-sm font-light'>{i.description}</p>

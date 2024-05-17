@@ -1,4 +1,7 @@
 import React from 'react'
+import { useRouter } from 'next/navigation';
+import { useUserContext } from '../context/UserContext';
+import { setUserData } from '@/utils/handleUserData';
 
 const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
     const nav = [
@@ -33,9 +36,48 @@ const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
         </svg>`
         },
     ]
-  return (
+    const router = useRouter();
+    const userContext = useUserContext();
+    const {user,setUser} = userContext
+    const handleLogout = ()=>{
+        let userData = {login:false, email:'',password:'',type:''}
+        setUserData(userData)
+        setUser(userData)
+        router.push('/login');
+    }
+    return (
     <div className='w-full h-full flex md:flex-col justify-between'>
         <div className='grid grid-cols-8 md:grid-cols-1 gap-1  w-full'>
+        {
+                user.type === 'veterinarian' &&
+                <button 
+                onClick={()=>setShowOnDashboard('createServices')}
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'createServices' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                    <span className='text-xl'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"></path>
+                        </svg>
+                    </span>
+                    <span className='hidden md:inline-block'>
+                       Create Vet Service
+                    </span>
+                </button> 
+            }
+            {
+                user.type === 'veterinarian' &&
+                <button 
+                onClick={()=>setShowOnDashboard('vetServices')}
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'vetServices' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                    <span className='text-xl'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
+                        <path fill="currentColor" d="M9.354 7.104a.5.5 0 0 0-.708-.708L7.234 7.808l-.397-.362a.5.5 0 0 0-.674.738l.75.685a.5.5 0 0 0 .69-.016zm0 4.292a.5.5 0 0 1 0 .708l-1.75 1.75a.5.5 0 0 1-.691.015l-.75-.685a.5.5 0 0 1 .674-.738l.397.363l1.412-1.413a.5.5 0 0 1 .708 0M11 12a.5.5 0 0 0 0 1h1.67c-.11-.313-.17-.65-.17-1zm-5 4h5.05q-.05.243-.05.5q0 .25.038.5H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3.401a3 3 0 0 0-1-.36V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2m4.5-8.5A.5.5 0 0 1 11 7h2.5a.5.5 0 0 1 0 1H11a.5.5 0 0 1-.5-.5m7 4.5a2 2 0 1 1-4 0a2 2 0 0 1 4 0m1.5 4.5c0 1.245-1 2.5-3.5 2.5S12 17.75 12 16.5a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5"></path>
+                    </svg>
+                    </span>
+                    <span className='hidden md:inline-block'>
+                       My Vet Services
+                    </span>
+                </button> 
+            }
             {
                 nav.map(i=>(
                     <button 
@@ -46,12 +88,13 @@ const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
                         className='text-xl'
                          dangerouslySetInnerHTML={{ __html: i.icon }}/>
                          <span className='hidden md:inline-block'>
-                            {i.name}
+                            { i.name }
                          </span>
                         </button>
                 ))
             }
-
+            
+          
         </div>
         <div className='grid grid-cols-2 md:grid-cols-1 gap-2'>
             <button 
@@ -64,7 +107,7 @@ const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
                 </span>
                 <span className='hidden md:inline-block'>Settings</span>
             </button>
-            <button className='text-start p-2 border-l-4 border-transparent hover:text-red-500 hover:border-red-400 hover:bg-red-400/10 flex items-center gap-1'>
+            <button onClick={handleLogout} className='text-start p-2 border-l-4 border-transparent hover:text-red-500 hover:border-red-400 hover:bg-red-400/10 flex items-center gap-1'>
                 <span className='text-xl'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
 	                    <path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"></path>

@@ -63,8 +63,8 @@ function PetAdoptionSection() {
         </div>
         <div className='w-full  lg:w-[85%] p-5 grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-2 lg:gap-5' >
             {
-              petAdoptionData.map(i=>(
-                <Link key={i.name} href={i.url} className=' rounded-lg overflow-hidden text-xs shadow-md hover:shadow-lg duration-100'>
+              petAdoptionData.map((i,index)=>(
+                <Link key={i.name+index} href={i.url} className=' rounded-lg overflow-hidden text-xs shadow-md hover:shadow-lg duration-100'>
                   <div className='relative z-[-100] '>
                     <img className='w-full z-0' src={i.img} alt={i.name} />
                     <div className=' absolute top-0 left-0 right-0 w-full bg-black/40 flex justify-between items-center p-2 text-xs text-white'>
