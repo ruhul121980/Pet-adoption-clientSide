@@ -26,7 +26,7 @@ function Navbar() {
       <div className='flex w-[100%] lg:w-auto justify-between items-center z-[10000]'>
         <Link href="/" className="font-bold text-2xl text-black flex items-center">
           <span>
-           
+            <Image  width={60} height={40} src={"/logo.svg"} alt='branding logo'/>
           </span>
           <span className=' text-custom-violet'>
             Petworld 

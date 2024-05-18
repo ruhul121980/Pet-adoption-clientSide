@@ -8,13 +8,13 @@ import UserCreatePost from './UserCreatePost'
 import VetAllServices from './VetAllServices'
 import VetCreateService from './VetCreateService'
 
-const UserDashboard = ({showOnDashboard}) => {
+const UserDashboard = ({showOnDashboard,setShowOnDashboard}) => {
      
   return (
     <div>
         {
             showOnDashboard == 'createAdoptionPost' &&
-            <UserCreatePost/> 
+            <UserCreatePost setShowOnDashboard={setShowOnDashboard}/> 
         }
         {
             showOnDashboard == 'myAdoptionPost' &&

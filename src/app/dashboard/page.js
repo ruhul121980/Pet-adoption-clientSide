@@ -29,7 +29,7 @@ const Page = () => {
             <UserLeftSideBar showOnDashboard={showOnDashboard} setShowOnDashboard={setShowOnDashboard} />
           </div>
           <div className=' md:col-span-10 min-h-[90vh]'>
-            <UserDashboard showOnDashboard={showOnDashboard} />
+            <UserDashboard showOnDashboard={showOnDashboard} setShowOnDashboard={setShowOnDashboard}/>
           </div>
         </main> 
     )

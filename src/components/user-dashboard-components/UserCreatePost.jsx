@@ -1,38 +1,43 @@
-import { getFormattedDate } from '@/utils/getDate';
+import './customImgInput.css'
 import React, { useState } from 'react'
-import ImageUploadComponent from './ImageUploadComponent';
+import { getFormattedDate } from '@/utils/getDate';
+import { useUserContext } from '../context/UserContext';
+import { handleAdoptPost } from '@/utils/handleAdoptPost';
+import { uploadImages } from '@/utils/handleUploadImages';
+import { setUserData } from '@/utils/handleUserData';
 
 
-const UserCreatePost = () => {
+const UserCreatePost = ({setShowOnDashboard}) => {
+  const userContext = useUserContext();
+  
   const [formData, setFormData] = useState({
+    banned:false,
+    adopted:false,
     petNickname: '',
     location: '',
-    age: '',
+    age: 'less Than 1 Month',
     gender: 'male',
     size: 'regular',
     vaccinated: 'no',
     spayed: 'no',
     category: '',
-    img: '../pet-adoption/dog.png',
+    img: ' http://localhost:4000/uploads/889c4f84-8eee-48f3-a257-9f872ce5a390.png',
     images: [],
     postDate: getFormattedDate()
   });
 
   const [selectedImages, setSelectedImages] = useState([]);
 
-  const handleChange = (event) => {
+  const handleChange =  (event) => {
     const { name, value, type } = event.target;
     console.log(name, " type is ", type)
-    if (type === 'files') {
-      console.log("files true")
-      // Handle multiple file selection
-      // console.log(event.target.files)
-      // setSelectedImages([...event.target.files]);
+    if (type === 'file') {
+      
       const files = [...event.target.files]; // Get all selected files
 
     const validImages = files.filter((file) => {
       const fileType = file.type;
-      return fileType === 'image/png' || fileType === 'image/jpeg';
+      return fileType === 'image/png' || fileType === 'image/jpeg' || fileType === 'image/jpg';
     });
 
     const imageDataPromises = validImages.map((image) => {
@@ -57,45 +62,49 @@ const UserCreatePost = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const removeImage =  (index) => {
+    let newList = selectedImages.filter((i,indx )=> indx !== index)
+    setSelectedImages(newList)
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const images = selectedImages
+    // console.log("got Images ", images) 
+    const imgURLs = await uploadImages(images)
+    console.log("Found Urls ", imgURLs)
 
-    const combinedFormData = new FormData();
+    const formDataToSend = {...formData}
+    formDataToSend.images = imgURLs
+    formDataToSend.img = imgURLs[0]
 
-    // Add text data to the FormData
-    for (const key in formData) {
-      combinedFormData.append(key, formData[key]);
+    // console.log('Form Data:', formDataToSend );  
+    const {email,_id,password,type,posts} = userContext.user 
+    const updateUserData = { email,_id,password,type,posts}
+    updateUserData.posts.unshift(formDataToSend) 
+    // console.log(updateUserData)
+    const serverResponse = await handleAdoptPost(updateUserData)
+    
+    if(serverResponse.status ==200){
+      setUserData({...userContext.user, ...serverResponse.data})
+      setShowOnDashboard('myAdoptionPost')
     }
-
-    // Add selected images to the FormData
-    //selectedImages.forEach((image) => combinedFormData.append('images', image));
-
-    console.log('Form Data:', combinedFormData.getAll());   
-
+    
     setFormData({
+      adopted:false,
+      banned:false,
       petNickname: '',
-      category:'',
       location: '',
-      age: '',
-      gender: '',
-      size: '',
-      vaccinated: '',
-      spayed: '',
+      age: 'less Than 1 Month',
+      gender: 'male',
+      size: 'regular',
+      vaccinated: 'no',
+      spayed: 'no',
+      category: '',
+      img: ' http://localhost:4000/uploads/889c4f84-8eee-48f3-a257-9f872ce5a390.png',
       images: [],
       postDate: getFormattedDate()
-    });
-
-    // name:'Pinky',
-    // postDate: 'April 9, 2024',
-    // category: 'Rabbit',
-    // location: ' Savar,Dhaka-1340',
-    // size: 'Regular',
-    // age: '3 month',
-    // vaccinated: 'no',
-    // gender:'male',
-    // spayed: 'no',
-    // img:'/pet-adoption/rabbit.png',
-    // url: '/'
+    }); 
     setSelectedImages([]);
   };
   return (
@@ -153,13 +162,12 @@ const UserCreatePost = () => {
           required
           className='p-2 border-none rounded'
           
-          >
-            <option value="">Select Age</option>
-            <option value="lessThan1Month">Less than 1 month</option>
-            <option value="1-3Months">1-3 Months</option>
-            <option value="3-6Months">3-6 Months</option>
-            <option value="6-10Months">6-10 Months</option>
-            <option value="10MonthsPlus">10 Months+</option>
+          > 
+            <option value="less Than 1 Month">Less than 1 month</option>
+            <option value="1-3 Months">1-3 Months</option>
+            <option value="3-6 Months">3-6 Months</option>
+            <option value="6-10 Months">6-10 Months</option>
+            <option value="10 Months Plus">10 Months+</option>
           </select>
         </div>
         <div className="w-full flex items-center gap-2 md:w-2/3  p-2">
@@ -250,7 +258,49 @@ const UserCreatePost = () => {
           </div>
         </div>
          <div className='w-full'>
-          <ImageUploadComponent handleChange={handleChange} selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>
+          {/* <ImageUploadComponent handleChange={handleChange} selectedImages={selectedImages} setSelectedImages={setSelectedImages}/> */}
+          <div className='flex flex-col gap-5 '> 
+        <div className='w-full grid grid-cols-4 gap-5'>
+            <div className="custom-file-upload w-full h-full aspect-[4/3] ">
+                <label htmlFor="images" className=' w-full h-[100%]   cursor-pointer'>
+                <div className='w-full border h-full flex flex-col items-center justify-center rounded shadow hover:shadow-md duration-100 hover:text-custom-violet-light'>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"></path>
+                        </svg>
+                    </span>
+                    Upload
+                </div>
+                <input
+                    type="file"
+                    id="images"
+                    name="images"
+                    multiple
+                    accept="image/png, image/jpeg"
+                    onChange={(e)=>handleChange(e)}
+                /> 
+                </label>
+            </div>
+        {selectedImages.length > 0 && (
+            <>
+            {
+                selectedImages.map((image, index) => (
+                    <div key={index} className='relative rounded'> 
+                        <img  src={image} alt={`Selected ${index + 1}`} className='rounded' />
+                        <button onClick={()=>removeImage(index)} className='bg-red-200 text-red-500 rounded-full hover:bg-red-500 hover:text-white duration-200 font-bold absolute top-1 right-2 p-2'>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 15 15">
+                                    <path fill="currentColor" fillRule="evenodd" d="M11.782 4.032a.575.575 0 1 0-.813-.814L7.5 6.687L4.032 3.218a.575.575 0 0 0-.814.814L6.687 7.5l-3.469 3.468a.575.575 0 0 0 .814.814L7.5 8.313l3.469 3.469a.575.575 0 0 0 .813-.814L8.313 7.5z" clipRule="evenodd"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                ))
+            }
+            </>
+        )}
+        </div> 
+    </div> 
         </div>
         
         <button type="submit" 
@@ -259,7 +309,7 @@ const UserCreatePost = () => {
       <div className='p-2'> 
         <div className='w-[400px] rounded-lg overflow-hidden text-xs shadow-md hover:shadow-lg duration-100'>
           <div className='relative z-[-100] '>
-            <img className='w-full z-0' src={formData.img} alt={formData.petNickname} />
+            <img className='w-full z-0' src={selectedImages.length? selectedImages[0] : formData.img} alt={formData.petNickname} />
             <div className=' absolute top-0 left-0 right-0 w-full bg-black/40 flex justify-between items-center p-2 text-xs text-white'>
               <p>{formData.category}</p>
               <p>{formData.postDate}</p>
