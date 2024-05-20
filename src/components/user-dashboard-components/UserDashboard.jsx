@@ -9,7 +9,7 @@ import VetAllServices from './VetAllServices'
 import VetCreateService from './VetCreateService'
 
 const UserDashboard = ({showOnDashboard,setShowOnDashboard}) => {
-     
+ 
   return (
     <div>
         {
@@ -18,7 +18,7 @@ const UserDashboard = ({showOnDashboard,setShowOnDashboard}) => {
         }
         {
             showOnDashboard == 'myAdoptionPost' &&
-            <UserAdoptionPost/>
+            <UserAdoptionPost setShowOnDashboard={setShowOnDashboard}/>
         }
         {
             showOnDashboard == 'myCart' &&

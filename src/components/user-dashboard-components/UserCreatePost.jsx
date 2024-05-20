@@ -20,20 +20,21 @@ const UserCreatePost = ({setShowOnDashboard}) => {
     size: 'regular',
     vaccinated: 'no',
     spayed: 'no',
-    category: '',
-    img: ' http://localhost:4000/uploads/889c4f84-8eee-48f3-a257-9f872ce5a390.png',
+    category: 'Dog',
+    img: './pet-adoption/dog.png',
     images: [],
     postDate: getFormattedDate()
   });
 
   const [selectedImages, setSelectedImages] = useState([]);
+  const [errorImages, setErrorImages] = useState('');
 
   const handleChange =  (event) => {
     const { name, value, type } = event.target;
-    console.log(name, " type is ", type)
+    // console.log(name, " type is ", type)
     if (type === 'file') {
-      
-      const files = [...event.target.files]; // Get all selected files
+    setErrorImages('')
+    const files = [...event.target.files]; // Get all selected files
 
     const validImages = files.filter((file) => {
       const fileType = file.type;
@@ -69,6 +70,10 @@ const UserCreatePost = ({setShowOnDashboard}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if( selectedImages.length == 0){
+      setErrorImages("No Image Uploaded !")
+      return;
+    }
     const images = selectedImages
     // console.log("got Images ", images) 
     const imgURLs = await uploadImages(images)
@@ -100,8 +105,8 @@ const UserCreatePost = ({setShowOnDashboard}) => {
       size: 'regular',
       vaccinated: 'no',
       spayed: 'no',
-      category: '',
-      img: ' http://localhost:4000/uploads/889c4f84-8eee-48f3-a257-9f872ce5a390.png',
+      category: 'Dog',
+      img: './pet-adoption/dog.png',
       images: [],
       postDate: getFormattedDate()
     }); 
@@ -127,7 +132,7 @@ const UserCreatePost = ({setShowOnDashboard}) => {
           />
         </div>
         <div className="w-full flex flex-col gap-2 md:w-2/3  p-2">
-          <label htmlFor="category" className='font-semibold'>Category:</label>
+          {/* <label htmlFor="category" className='font-semibold'>Category:</label>
           <input
             type="text"
             id="category"
@@ -137,7 +142,23 @@ const UserCreatePost = ({setShowOnDashboard}) => {
             required
             className='p-2 bg-gray-500/10 '
             placeholder='St no, post code, Address'
-          />
+          /> */}
+          <label htmlFor="category" className='font-semibold'>Category:</label>
+          <select 
+          id="category" 
+          name="category" 
+          value={formData.category} 
+          onChange={handleChange} 
+          required
+          className='p-2 border-none rounded'
+          
+          > 
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            <option value="Fish">Fish</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <div className="w-full flex flex-col gap-2 md:w-2/3  p-2">
           <label htmlFor="location" className='font-semibold'>Location:</label>
@@ -302,7 +323,7 @@ const UserCreatePost = ({setShowOnDashboard}) => {
         </div> 
     </div> 
         </div>
-        
+        {errorImages && <p className='text-xs font-semibold text-red-500'>{errorImages}</p>}
         <button type="submit" 
         className='bg-blue-500/80 hover:bg-blue-500 text-white px-5 py-2 rounded-lg w-full md:w-2/3 font-bold duration-200'>Post Adoption</button>
       </form>

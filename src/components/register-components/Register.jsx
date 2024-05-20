@@ -6,6 +6,7 @@ import { isValidEmail } from '@/utils/emailValidChecker';
 import { handleRegisterFunction } from '@/utils/handleRegisterFunction';
 import { setUserData } from '@/utils/handleUserData';
 import { useUserContext } from '../context/UserContext';
+import { checkPasswordStrength } from '@/utils/passwordStrength';
 
 const Register = () => {
   const router = useRouter();
@@ -23,6 +24,10 @@ const Register = () => {
     const [errorEmail, setErrorEmail] = useState('');
     const [errorLicense, setErrorLicense] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [errorPhone, setErrorPhone] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
+    const [passwordStrength, setPasswordStrength] = useState('')
     
     const [showPassword, setShowPassword] = useState(false);
     const [registerType, setRegisterType] = useState('user') // user / veterinarian
@@ -46,16 +51,29 @@ const Register = () => {
         }
       } 
       else if (name === 'phoneNumber') {
+        
+        if(value.length != 11 ){
+          setErrorPhone("Enter 11 Digit Phone Number")
+        }else{
+          setErrorPhone('')
+        }
         setPhoneNumber(value);
       } 
       else if (name === 'address') {
         setAddress(value);
       } 
       else if (name === 'license') {
+        if(value.length < 6 ){
+          setErrorLicense("License Must have 6 Character")
+        }else{
+          setErrorLicense('')
+        }
         setLicense(value);
       } 
       else if (name === 'password') {
         setPassword(value);
+        setPasswordStrength(checkPasswordStrength(password))
+        
       } else if (name === 'confirmPassword') {
         setConfirmPassword(value);
       }
@@ -63,7 +81,10 @@ const Register = () => {
   
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent default form submission behavior
-  
+      if(password.length < 6){
+        setErrorPassword('Password is Weak')
+        return;
+      }
       if (password !== confirmPassword) {
         setErrorMessage('Passwords do not match!');
         return; // Prevent further processing if passwords don't match
@@ -71,6 +92,14 @@ const Register = () => {
       if(registerType == 'veterinarian' && license.length < 3){
         setErrorLicense('Give Valid License ')
         return ;
+      }
+      if(phoneNumber.length != 11){
+        setErrorPhone("Invalid Mobile Number")
+        return;
+      }
+      if(registerType == 'veterinarian' && license.length < 6){
+        setErrorLicense("Invalid License Number")
+        return;
       }
       let registerObj = {
         firstName,
@@ -113,7 +142,7 @@ const Register = () => {
         </div>
         <div  >
             <h2 className='font-semibold  p-5 pb-0  text-3xl md:text-4xl lg:text-5xl'>Register</h2>
-            <div className="w-full lg:w-2/3 p-5 flex flex-col gap-1"> 
+            <form onSubmit={handleSubmit} className="w-full lg:w-2/3 p-5 flex flex-col gap-1"> 
                 <div className="grid grid-cols-2 gap-1 border bg-custom-violet-light/10 p-1 rounded">
                      <button 
                      onClick={()=>{setRegisterType('user');setErrorLicense('')}} 
@@ -132,6 +161,7 @@ const Register = () => {
                     placeholder='First Name'
                     onChange={handleChange}
                     className=' border-2 border-custom-violet rounded p-3'
+                    required
                     />
                 </div>
                 <div className="input-field flex flex-col gap-1">
@@ -144,6 +174,7 @@ const Register = () => {
                     placeholder='Last Name'
                     onChange={handleChange}
                     className=' border-2 border-custom-violet rounded p-3'
+                    required
                     />
                 </div>
                 <div className="input-field flex flex-col gap-1">
@@ -156,6 +187,7 @@ const Register = () => {
                     placeholder='St 04, Post Code , Country'
                     onChange={handleChange}
                     className=' border-2 border-custom-violet rounded p-3'
+                    
                     />
                 </div>
                 <div className="input-field flex flex-col gap-1">
@@ -168,8 +200,10 @@ const Register = () => {
                     placeholder='01*********'
                     onChange={handleChange}
                     className=' border-2 border-custom-violet rounded p-3'
+                    required
                     />
                 </div>
+                {errorPhone && <p className="text-red-500 text-xs py-2">{errorPhone}</p>}
                 {
                   registerType == 'veterinarian' &&
                   <div className="input-field flex flex-col gap-1">
@@ -182,6 +216,7 @@ const Register = () => {
                       placeholder='s1df**********'
                       onChange={handleChange}
                       className=' border-2 border-custom-violet rounded p-3'
+
                       />
                   </div>
                   
@@ -211,6 +246,7 @@ const Register = () => {
                     onChange={handleChange}
                     className=' border-2 border-custom-violet rounded p-3'
                     />
+                    {passwordStrength && <p className="text-purple-500 text-xs py-2">{passwordStrength}</p>}
                     <label htmlFor="confirmPassword" className='font-semibold text-lg text-black/50'>Confirm Password:</label>
                     <input
                     type={showPassword ? 'text' : 'password'}
@@ -221,6 +257,7 @@ const Register = () => {
                     onChange={handleChange}
                     className=' border-2 border-custom-violet rounded p-3'
                     />
+                    {errorPassword && <p className="text-red-500 text-xs py-2">{errorPassword}</p>}
                     <button type="button" className='text-xs text-start flex gap-2 items-center py-2' onClick={toggleShowPassword}>
                         <span className='text-base'>
                             {showPassword ? 
@@ -239,10 +276,10 @@ const Register = () => {
                     </button>
                 </div>
                 <button 
-                onClick={handleSubmit} 
+                
                 className=' px-8 py-3 bg-custom-violet-light/90 hover:bg-custom-violet-light duration-200 rounded-lg w-full font-bold text-white'
                 >Register</button>
-                {errorMessage && <p className="text-red-500 text-xs py-2">{errorMessage}</p>}
+                {errorMessage && <p key={'errormessage'} className="text-red-500 text-xs py-2">{errorMessage}</p>}
                 <p className='font-light text-sm py-3'>
                     Already Have An Account? 
                     <span>
@@ -254,7 +291,7 @@ const Register = () => {
                         </Link>
                     </span>
                 </p>
-            </div>
+            </form>
         </div>
         
     </div>

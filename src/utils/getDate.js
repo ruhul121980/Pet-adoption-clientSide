@@ -5,7 +5,7 @@ export function getFormattedDate() {
       month: 'long',
       day: 'numeric'
     };
-    console.log(today.toLocaleDateString('en-US', options))
+    // console.log(today.toLocaleDateString('en-US', options))
     return today.toLocaleDateString('en-US', options);
   }
   
