@@ -34,7 +34,7 @@ const Login = () => {
     };
   
     const handleSubmit = async (event) => {
-     // event.preventDefault(); // Prevent default form submission behavior
+     
      console.log("login clicked") 
      if(email.length > 2 | password.length >2 ){
         let loginObj = {
