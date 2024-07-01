@@ -42,7 +42,7 @@ const UserDashboard = ({showOnDashboard,setShowOnDashboard}) => {
         }
         {
             showOnDashboard == 'createServices' &&
-            <VetCreateService/>
+            <VetCreateService setShowOnDashboard={setShowOnDashboard}/>
         }
     </div>
   )

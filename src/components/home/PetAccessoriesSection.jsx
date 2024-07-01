@@ -24,7 +24,7 @@ function PetAccessoriesSection() {
               ))
             }
         </div>
-        <div className='p-4 flex items-center justify-center '>
+        <div className='p-5 flex items-center justify-center '>
         <section className='w-full lg:w-[85%] shadow-lg p-5 flex flex-col md:flex-row justify-between bg-purple-100 rounded-lg  '>
           
           <Image 
