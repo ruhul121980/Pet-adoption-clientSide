@@ -4,38 +4,6 @@ import { useUserContext } from '../context/UserContext';
 import { setUserData } from '@/utils/handleUserData';
 
 const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
-    const nav = [
-        {
-            name: 'Create Post' , value: 'createAdoptionPost',
-            icon: `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"></path>
-        </svg>`
-        },
-        {
-            name: 'My Adoption Post' , value: 'myAdoptionPost',
-            icon:`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-            <path fill="currentColor" d="M9.354 7.104a.5.5 0 0 0-.708-.708L7.234 7.808l-.397-.362a.5.5 0 0 0-.674.738l.75.685a.5.5 0 0 0 .69-.016zm0 4.292a.5.5 0 0 1 0 .708l-1.75 1.75a.5.5 0 0 1-.691.015l-.75-.685a.5.5 0 0 1 .674-.738l.397.363l1.412-1.413a.5.5 0 0 1 .708 0M11 12a.5.5 0 0 0 0 1h1.67c-.11-.313-.17-.65-.17-1zm-5 4h5.05q-.05.243-.05.5q0 .25.038.5H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3.401a3 3 0 0 0-1-.36V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2m4.5-8.5A.5.5 0 0 1 11 7h2.5a.5.5 0 0 1 0 1H11a.5.5 0 0 1-.5-.5m7 4.5a2 2 0 1 1-4 0a2 2 0 0 1 4 0m1.5 4.5c0 1.245-1 2.5-3.5 2.5S12 17.75 12 16.5a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5"></path>
-        </svg>`
-        },
-        // {
-        //     name: 'Veterinarian Visits' , value: 'veterinarianVisits',
-        //     icon:`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
-        //     <path fill="currentColor" fillRule="evenodd" d="M14.433 33.442a3 3 0 1 0 1.96-.416a9 9 0 0 1-.103-.405a20 20 0 0 1-.32-1.87a17 17 0 0 1-.14-1.914a7 7 0 0 1 .015-.527q.577-.166 1.155-.297c.441-.1.703.42.914.842l.086.169h11.749c.229-.434.748-1.126 1.251-1.011q.806.184 1.609.433l-.003.001q-.003-.003 0 .002c.004.014.026.08.048.22q.038.244.05.625c.014.504-.015 1.117-.074 1.735c-.06.617-.149 1.214-.249 1.685q-.033.157-.066.286H31a1 1 0 0 0-.894.553l-1 2A1 1 0 0 0 29 36v2a1 1 0 0 0 1 1h2v-2h-1v-.764L31.618 35h2.764L35 36.236V37h-1v2h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-.106-.447l-1-2A1 1 0 0 0 35 33h-.636c.107-.533.196-1.155.256-1.779c.066-.674.1-1.373.083-1.983l-.001-.028C38.69 30.895 42 33.666 42 36.57V42H6v-5.43c0-3.032 3.61-5.92 7.831-7.577c.011.622.07 1.325.155 2.006c.092.735.217 1.466.355 2.068q.045.193.092.375M16 37.015c.538 0 1-.44 1-1.015c0-.574-.462-1.015-1-1.015s-1 .44-1 1.015c0 .574.462 1.015 1 1.015M24 24a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2c5.523 0 10-4.477 10-10S29.523 6 24 6s-10 4.477-10 10s4.477 10 10 10" clipRule="evenodd"></path>
-        // </svg>`
-        // },
-        {
-            name: 'My Cart' , value: 'myCart',
-            icon:`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"></path>
-        </svg>`
-        },
-        // {
-        //     name: 'My Wishlist' , value: 'myWishlist',
-        //     icon:`<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-        //     <path fill="currentColor" d="m12.1 18.55l-.1.1l-.11-.1C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5c1.54 0 3.04 1 3.57 2.36h1.86C13.46 6 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5c0 2.89-3.14 5.74-7.9 10.05M16.5 3c-1.74 0-3.41.81-4.5 2.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5c0 3.77 3.4 6.86 8.55 11.53L12 21.35l1.45-1.32C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3"></path>
-        // </svg>`
-        // },
-    ]
     const router = useRouter();
     const userContext = useUserContext();
     const {user,setUser} = userContext
@@ -82,7 +50,7 @@ const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
                 user.type === 'user' &&
                 <button 
                 onClick={()=>setShowOnDashboard('veterinarianVisits')}
-                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'vetServices' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'veterinarianVisits' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
                     <span className='text-xl'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
                             <path fill="currentColor" fillRule="evenodd" d="M14.433 33.442a3 3 0 1 0 1.96-.416a9 9 0 0 1-.103-.405a20 20 0 0 1-.32-1.87a17 17 0 0 1-.14-1.914a7 7 0 0 1 .015-.527q.577-.166 1.155-.297c.441-.1.703.42.914.842l.086.169h11.749c.229-.434.748-1.126 1.251-1.011q.806.184 1.609.433l-.003.001q-.003-.003 0 .002c.004.014.026.08.048.22q.038.244.05.625c.014.504-.015 1.117-.074 1.735c-.06.617-.149 1.214-.249 1.685q-.033.157-.066.286H31a1 1 0 0 0-.894.553l-1 2A1 1 0 0 0 29 36v2a1 1 0 0 0 1 1h2v-2h-1v-.764L31.618 35h2.764L35 36.236V37h-1v2h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-.106-.447l-1-2A1 1 0 0 0 35 33h-.636c.107-.533.196-1.155.256-1.779c.066-.674.1-1.373.083-1.983l-.001-.028C38.69 30.895 42 33.666 42 36.57V42H6v-5.43c0-3.032 3.61-5.92 7.831-7.577c.011.622.07 1.325.155 2.006c.092.735.217 1.466.355 2.068q.045.193.092.375M16 37.015c.538 0 1-.44 1-1.015c0-.574-.462-1.015-1-1.015s-1 .44-1 1.015c0 .574.462 1.015 1 1.015M24 24a8 8 0 1 0 0-16a8 8 0 0 0 0 16m0 2c5.523 0 10-4.477 10-10S29.523 6 24 6s-10 4.477-10 10s4.477 10 10 10" clipRule="evenodd"></path>
@@ -94,20 +62,64 @@ const UserLeftSideBar = ({showOnDashboard,setShowOnDashboard}) => {
                 </button> 
             }
             {
-                nav.map(i=>(
-                    <button 
-                     key={i.value} 
-                     onClick={()=>setShowOnDashboard(i.value)}
-                     className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == i.value && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
-                        <span
-                        className='text-xl'
-                         dangerouslySetInnerHTML={{ __html: i.icon }}/>
-                         <span className='hidden md:inline-block'>
-                            { i.name }
-                         </span>
-                        </button>
-                ))
+                user.type === 'user' &&
+                <button  
+                onClick={()=>setShowOnDashboard('myCart')}
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'myCart' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                    <span className='text-xl'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 56 56"><path fill="currentColor" d="M45.416 28.85C51.155 28.85 56 24.068 56 18.287c0-5.781-4.783-10.564-10.584-10.564c-5.781 0-10.564 4.783-10.564 10.564c0 5.822 4.783 10.563 10.564 10.563m-28.51 12.976h24.268c.81 0 1.517-.665 1.517-1.56c0-.893-.707-1.559-1.517-1.559H17.26c-1.186 0-1.914-.832-2.1-2.1l-.313-2.184h26.368c2.163 0 3.556-.915 4.346-2.703c-1.788 0-3.473-.353-5.032-1.04c-.312.416-.707.603-1.29.603l-24.87.021l-1.767-12.06h19.463c-.103-.957-.041-2.205.104-3.14H12.144l-.374-2.642c-.229-1.6-.79-2.412-2.911-2.412h-7.32C.707 11.05 0 11.778 0 12.61c0 .852.707 1.58 1.539 1.58h7.028l3.328 22.833c.436 2.953 1.996 4.803 5.011 4.803m28.53-16.677c-.727 0-1.372-.5-1.372-1.268v-4.326h-3.972a1.274 1.274 0 0 1-1.268-1.268c0-.686.561-1.269 1.268-1.269h3.972v-4.304c0-.79.645-1.29 1.373-1.29c.727 0 1.35.5 1.35 1.29v4.304h3.973c.707 0 1.29.582 1.29 1.269c0 .686-.583 1.268-1.29 1.268h-3.972v4.326c0 .769-.624 1.268-1.351 1.268M18.55 51.933a3.342 3.342 0 0 0 3.369-3.37a3.355 3.355 0 0 0-3.37-3.368a3.342 3.342 0 0 0-3.368 3.369a3.329 3.329 0 0 0 3.369 3.369m19.464 0a3.342 3.342 0 0 0 3.368-3.37a3.355 3.355 0 0 0-3.368-3.368c-1.893 0-3.41 1.497-3.41 3.369c0 1.892 1.517 3.369 3.41 3.369"></path>
+                        </svg>
+                    </span>
+                    <span className='hidden md:inline-block'>
+                        My Cart
+                    </span>
+                </button>
             }
+            {
+                user.type === 'user' &&
+                <button  
+                onClick={()=>setShowOnDashboard('confirmedOrder')}
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'confirmedOrder' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                    <span className='text-xl'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2"></path>
+                        </svg>
+                    </span>
+                    <span className='hidden md:inline-block'>
+                        Confirmed Order
+                    </span>
+                </button>
+            }
+            {
+                user.type === 'user' &&
+                <button  
+                onClick={()=>setShowOnDashboard('myAdoptionPost')}
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'myAdoptionPost' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                    <span className='text-xl'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
+                        <path fill="currentColor" d="M9.354 7.104a.5.5 0 0 0-.708-.708L7.234 7.808l-.397-.362a.5.5 0 0 0-.674.738l.75.685a.5.5 0 0 0 .69-.016zm0 4.292a.5.5 0 0 1 0 .708l-1.75 1.75a.5.5 0 0 1-.691.015l-.75-.685a.5.5 0 0 1 .674-.738l.397.363l1.412-1.413a.5.5 0 0 1 .708 0M11 12a.5.5 0 0 0 0 1h1.67c-.11-.313-.17-.65-.17-1zm-5 4h5.05q-.05.243-.05.5q0 .25.038.5H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3.401a3 3 0 0 0-1-.36V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2m4.5-8.5A.5.5 0 0 1 11 7h2.5a.5.5 0 0 1 0 1H11a.5.5 0 0 1-.5-.5m7 4.5a2 2 0 1 1-4 0a2 2 0 0 1 4 0m1.5 4.5c0 1.245-1 2.5-3.5 2.5S12 17.75 12 16.5a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5"></path>
+                    </svg>
+                    </span>
+                    <span className='hidden md:inline-block'>
+                        My Adoption Posts
+                    </span>
+                </button>
+            }
+            {
+                user.type === 'user' &&
+                <button  
+                onClick={()=>setShowOnDashboard('createAdoptionPost')}
+                className={`border-l-4 border-transparent hover:border-custom-violet-light hover:bg-custom-violet-light/10 text-start hover:text-custom-violet p-2 flex items-center gap-1 select-none duration-150 ${showOnDashboard == 'createAdoptionPost' && 'text-custom-violet  border-custom-violet-light bg-custom-violet-light/10' }`} >
+                    <span className='text-xl'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"></path>
+                        </svg>
+                    </span>
+                    <span className='hidden md:inline-block'>
+                        Create Post
+                    </span>
+                </button>
+            } 
             
           
         </div>

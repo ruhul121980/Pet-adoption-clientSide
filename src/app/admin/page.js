@@ -1,13 +1,9 @@
 'use client'
-import React, { useState ,useEffect} from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from 'react'; 
+import AdminPage from '@/components/admin-components/AdminPage';
 
-export default  function  adoption () {
-    
+export default  function  page () { 
     return  (
-    <main  className="min-h-screen  ">
-      Admin Page
-    </main>
+     <AdminPage/>
     )
   };

@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { getAllVetsInfo } from '@/utils/getAllVetsInfo'
-import SingleVetView from './SingleVetView'
-const AdminVetView = () => {
-    const [allVetsData, setAllVetsData] = useState(null)
+import { getAllUsersInfo } from '@/utils/getAllUsersInfo'
+import SingleUserView from './SingleUserView'
+
+const AdminUserView = () => {
+    const [allUsersData, setAllUsersData] = useState(null)
     const [userDetails, setUserDetails] = useState(null)
-    const getAllVetsData = async()=>{ 
-        let data = await getAllVetsInfo() 
-        if (data.status == 200) { 
-            setAllVetsData(data.allVets)
+
+    const getAllUsersData = async()=>{ 
+        let data = await getAllUsersInfo()
+        if (data.status == 200) {
+            setAllUsersData(data.allUsers)
             setUserDetails(null)
         } 
     }
     useEffect(()=>{
-        getAllVetsData()
+        getAllUsersData()
     },[])
-
-    if (allVetsData) {
+    if (allUsersData) {
         return (
             <div className='  w-full min-h-screen text-xs'>
-                <h3 className='font-semibold text-base text-slate-900'>Veterinarians:</h3><br />
+                <h3 className='font-semibold text-base text-slate-900'>Users:</h3><br />
 
                 {
                     userDetails && 
-                    <SingleVetView 
+                    <SingleUserView 
                         setUserDetails={setUserDetails} 
                         userDetails={userDetails} 
-                        getAllVetsData={getAllVetsData} 
+                        getAllUsersData={getAllUsersData} 
                         />
                 }
                 {
-                    !userDetails &&
+                    !userDetails && 
                     <table className='table-auto'>
                         <thead>
                             <tr className='border-b-2 '>
@@ -37,27 +38,23 @@ const AdminVetView = () => {
                                 <th className='p-2 px-3'>Last Name</th>
                                 <th className='p-2 px-3'>Email</th>
                                 <th className='p-2 px-3'>Phone</th>
-                                <th className='p-2 px-3'>License</th>
-                                <th className='p-2 px-3'>License Status</th>
                                 <th className='p-2 px-3'>Banned</th>
-                                <th className='p-2 px-3'>Total Vet Posts</th>
+                                <th className='p-2 px-3'>Total Posts</th>
                             </tr>
                         </thead>
                         <tbody>
                         {
-                            allVetsData.map((user,index)=>(
+                            allUsersData.map((user,index)=>(
                                 <tr key={index} className='border-b-2 '>
                                     <td className='p-2 px-3'>{user.firstName}</td>
                                     <td className='p-2 px-3'>{user.lastName}</td>
                                     <td className='p-2 px-3'>{user.email}</td>
                                     <td className='p-2 px-3'>{user.phoneNumber}</td>
-                                    <td className='p-2 px-3'>{user.license}</td>
-                                    <td className='p-2 px-3'>{user.approved ? 'Yes': 'No'}</td>
-                                    <td className='p-2 px-3'>{user.banned ? 'Yes': 'No'}</td>
-                                    <td className='p-2 px-3'>{user.vet_posts?.length || 0}</td>
+                                    <td className='p-2 px-3'>{user.banned? 'Yes': 'No'}</td>
+                                    <td className='p-2 px-3'>{user.posts?.length || 0}</td>
                                     <td className=''>
                                         <button onClick={()=>setUserDetails(user)} className='p-1 px-3 bg-green-500 rounded'>View Details</button>
-                                    </td>
+                                    </td> 
                                 </tr>
                             ))
                         }
@@ -71,7 +68,7 @@ const AdminVetView = () => {
             <div className='p-5' >Loading All Users Data</div>
           )
     }
+  
 }
-export default AdminVetView
 
- 
+export default AdminUserView

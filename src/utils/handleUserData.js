@@ -7,7 +7,7 @@ export const getUserData = () => {
   };
   
   export const setUserData = (user) => {
-    console.log("setting user data", user)
+    console.log("set user data", user)
     localStorage.setItem('petworldUser', JSON.stringify(user));
   };
   

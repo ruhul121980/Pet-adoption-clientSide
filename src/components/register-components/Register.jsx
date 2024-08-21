@@ -107,7 +107,9 @@ const Register = () => {
         email,
         password,
         phoneNumber,
-        address
+        address,
+        cart: [],
+        order: [],
       }
       if (registerType == 'user') {
         registerObj.type = 'user'

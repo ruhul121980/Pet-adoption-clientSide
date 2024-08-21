@@ -9,7 +9,8 @@ import { setUserData } from '@/utils/handleUserData';
 
 const UserCreatePost = ({setShowOnDashboard}) => {
   const userContext = useUserContext();
-  
+  const {user } = userContext
+
   const [formData, setFormData] = useState({
     banned:false,
     adopted:false,
@@ -23,7 +24,9 @@ const UserCreatePost = ({setShowOnDashboard}) => {
     category: 'Dog',
     img: './pet-adoption/dog.png',
     images: [],
-    postDate: getFormattedDate()
+    postDate: getFormattedDate(),
+    phone: user.phoneNumber ,
+    email: user.email
   });
 
   const [selectedImages, setSelectedImages] = useState([]);
@@ -108,7 +111,9 @@ const UserCreatePost = ({setShowOnDashboard}) => {
       category: 'Dog',
       img: './pet-adoption/dog.png',
       images: [],
-      postDate: getFormattedDate()
+      postDate: getFormattedDate(),
+      phone: user.phoneNumber ,
+      email: user.email
     }); 
     setSelectedImages([]);
   };
@@ -131,18 +136,7 @@ const UserCreatePost = ({setShowOnDashboard}) => {
             placeholder='Pet Nickname'
           />
         </div>
-        <div className="w-full flex flex-col gap-2 md:w-2/3  p-2">
-          {/* <label htmlFor="category" className='font-semibold'>Category:</label>
-          <input
-            type="text"
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-            className='p-2 bg-gray-500/10 '
-            placeholder='St no, post code, Address'
-          /> */}
+        <div className="w-full flex flex-col gap-2 md:w-2/3  p-2"> 
           <label htmlFor="category" className='font-semibold'>Category:</label>
           <select 
           id="category" 
@@ -157,6 +151,7 @@ const UserCreatePost = ({setShowOnDashboard}) => {
             <option value="Cat">Cat</option>
             <option value="Bird">Bird</option>
             <option value="Fish">Fish</option>
+            <option value="Rabbit">Rabbit</option>
             <option value="Other">Other</option>
           </select>
         </div>

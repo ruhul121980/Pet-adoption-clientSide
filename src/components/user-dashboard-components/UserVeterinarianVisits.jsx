@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useUserContext } from '../context/UserContext';
 import { findVetsWithUserMeetings } from '@/utils/matchingVets';
+import { TK } from '../TK';
 
 
 const UserVeterinarianVisits = () => {
@@ -57,8 +58,8 @@ const UserVeterinarianVisits = () => {
                     <p className=' uppercase font-semibold text-gray-500'>
                       {s.vetName}
                     </p>
-                    <p className='text-2xl font-black text-purple-500'>
-                      ${s.fee}
+                    <p className='flex items-center gap-1 text-2xl font-black text-purple-500'>
+                      <TK/>{s.fee}
                     </p>
                     
                   </div>

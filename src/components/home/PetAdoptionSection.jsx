@@ -32,39 +32,31 @@ function PetAdoptionSection() {
   ]
   const [sort,setSort] = useState('All'); 
   
-  const [adoptionPosts, setAdoptionPosts] = useState([]); // Empty array to store posts
-  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+  const [adoptionPosts, setAdoptionPosts] = useState([]);
 
   // Function to fetch adoption posts
   const fetchAdoptionPosts = async () => {  
     try {
       const headers = new Headers({
         'Content-Type': 'application/json',
-     //    'Access-Control-Request-Method': 'GET'
         });
- 
-     // Send the GET request
-     const response = await fetch('http://localhost:4000/api/all-adoptions', {
-       method: 'Get',
-       headers, 
-     });
+      const response = await fetch('http://localhost:4000/api/all-adoptions', {
+        method: 'Get',
+        headers, 
+      });
       if (!response.ok) {
         throw new Error(`All Adoptions API request failed with status ${response.status}`);
       }
-
       const result = await response.json();
-      // console.log(result)
       if(result.status == 200){
         const data = result.data
-        setAdoptionPosts(data); // Update state with fetched posts
+        setAdoptionPosts(data); 
       }
     } catch (err) {
       console.error('Error fetching posts:', err);
     } 
   };
-  // console.log( "Find from api",adoptionPosts)
   let homeAdoptionPosts = adoptionPosts.slice(0,4)
-  // Fetch posts on component mount
   useEffect(() => {
     fetchAdoptionPosts();
   }, []);

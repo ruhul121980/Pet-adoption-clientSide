@@ -27,6 +27,7 @@ function VeterinarianSection() {
       </div>
       <div className='w-full  lg:w-[85%] p-5 grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-2 lg:gap-5' >
             {
+              homeVetPosts &&
               homeVetPosts.map((i,index)=>(
                 <Link 
                 key={i.serviceTitle + index} 

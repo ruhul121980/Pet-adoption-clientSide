@@ -11,7 +11,7 @@ async function uploadImage(imageData) {
         });
 
         const responseData = await response.json();
-        return responseData.imagePath; // server returns the image path in the response
+        return responseData.imagePath; 
     } catch (error) {
         console.error('Error uploading image:', error);
         return null;

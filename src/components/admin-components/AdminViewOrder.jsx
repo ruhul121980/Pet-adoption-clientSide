@@ -3,6 +3,7 @@ import { getAllOrders } from '@/utils/getMyOrder'
 import React, { useEffect, useState } from 'react'
 import UserOrderCard from '../user-dashboard-components/UserOrderCard'
 import { handleMarkOrder } from '@/utils/handleMarkOrder'
+import { TK } from '../TK'
 
 const AdminViewOrder = () => {
 
@@ -25,7 +26,7 @@ const AdminViewOrder = () => {
   return (
     <div>
     <h1 className='text-3xl font-bold'>
-    Total Order: {orders.length}
+    Total Order: {orders?.length}
     </h1>
     <div>
     {
@@ -34,7 +35,7 @@ const AdminViewOrder = () => {
           <div key={index} className="flex flex-col py-3 border-b ">
               <div>
                   <p> Order No: {index + 1} </p>
-                  <p>Total: ${order.total_amount} </p>
+                  <p className='flex items-center'>Total: <span className='text-xl'><TK/></span> {order.total_amount} </p>
                   <p className={` inline-block font-bold `}>Delivery: {order.orderCompleted? " complete ": " Pending "}</p>
                   <br />
                   <button onClick={()=>MarkOrderAndUpdate(order)} className={` py-2 px-5 text-sm ${order.orderCompleted? " bg-red-500 ": " bg-green-500 "} hover:shadow my-2 rounded-full font-semibold text-white`}>Mark as {order.orderCompleted? "Pending  ": "completed  "}</button>
