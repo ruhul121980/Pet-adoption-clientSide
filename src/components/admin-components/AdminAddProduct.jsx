@@ -111,7 +111,7 @@ const AdminAddProduct = ({setShow}) => {
   };
   return (
     <>
-      <h2 className='text-xl md:text-3xl p-3'>Add New Product</h2>
+      <h2 className='text-xl md:text-3xl p-3'>Add new Product</h2>
       <div className='w-full grid grid-cols-1 lg:grid-cols-2 p-3'>
         <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-2'>
           <div className='w-full'>
